@@ -1,139 +1,70 @@
-# Streamlit 챗봇 선택기 애플리케이션
-
+# 오리와 함께하는 직장 커뮤니케이션 연습
 ## 프로젝트 개요
+이 애플리케이션은 직장 내 다양한 성격 유형과의 커뮤니케이션 스킬을 향상시키기 위한 대화형 연습 도구입니다. 다섯 가지 다른 성격을 가진 '오리' 캐릭터들과의 대화를 통해 상황별 커뮤니케이션 방식을 연습할 수 있습니다. OpenAI의 GPT 모델을 활용하여 자연스러운 대화 경험을 제공하고, 대화 후 피드백을 통해 사용자의 커뮤니케이션 스타일을 분석합니다.
+## 기능 소개
+- **다양한 성격 유형의 오리 캐릭터**
+    - 🧠 **팩폭오리**: 논리적이고 효율성 중심의 직설적 성격
+    - 💖 **토닥오리**: 감정을 중시하고 공감을 잘하는 소심한 성격
+    - 🛡️ **네네오리**: 소극적이고 방어적인 성격
+    - 🎨 **내맘오리**: 자유롭고 창의적인 사고를 가진 성격
+    - 🛠️ **실속오리**: 실질적 이득과 성과를 중시하는 성격
 
-이 프로젝트는 Streamlit을 사용하여 다양한 유형의 챗봇을 선택하고 대화할 수 있는 웹 애플리케이션입니다. 사용자는 5가지 서로 다른 유형의 챗봇 중에서 선택할 수 있으며, 선택한 챗봇과 대화를 나눌 수 있습니다.
+- **실제 직장 상황 기반 대화**
+    - 각 오리 캐릭터마다 특정 직장 상황(회의, 피드백 등)에서의 대화를 진행
+    - 3번의 대화를 주고받으며 상황별 커뮤니케이션 연습
 
-## 주요 기능
+- **AI 기반 커뮤니케이션 피드백**
+    - 대화 완료 후 사용자의 커뮤니케이션 스타일 분석
+    - 긍정적 측면과 개선점 제시
+    - 종합적인 피드백 제공
 
-- 5가지 챗봇 유형 선택 화면
-- 챗봇 유형 선택 시 상세 정보를 보여주는 모달 팝업
-- 챗봇과의 대화 인터페이스
-- 세션 상태 유지 기능
-- 페이지 간 이동 기능
+- **대화 기록 저장 및 검토**
+    - 완료된 대화 내용과 피드백을 로컬에 저장
+    - 이전 대화 기록 검토 기능
 
-## 설치 및 실행 방법
-
-### 필수 조건
-
-- Python 3.9 이상
-- Streamlit 1.32.0 이상
-
-### 설치
-
+## 설치 방법
 1. 저장소 클론 또는 다운로드:
+``` bash
+git clone [저장소 URL]
+cd [프로젝트 폴더]
 ```
-git clone <repository-url>
-cd <repository-directory>
+1. 필요한 패키지 설치:
+``` bash
+pip install streamlit openai
 ```
-
-
-2. 필요한 패키지 설치:
+1. OpenAI API 키 설정: `.streamlit/secrets.toml` 파일을 생성하고 다음과 같이 API 키를 설정합니다:
+``` toml
+[openai]
+api_key = "your-api-key-here"
 ```
-pip install streamlit pillow
-```
-
-
-### 실행 방법
-
-프로젝트 디렉토리에서 다음 명령어를 실행합니다:
-```
+## 실행 방법
+다음 명령어로 애플리케이션을 실행합니다:
+``` bash
 streamlit run app.py
 ```
+## 사용 방법
+1. 메인 화면에서 대화하고 싶은 오리 캐릭터를 선택합니다.
+2. 주어진 상황에 맞게 대화를 입력합니다.
+3. 총 3번의 대화를 주고받으면 커뮤니케이션 피드백이 제공됩니다.
+4. 피드백을 확인하고 대화 내용이 자동으로 저장됩니다.
+5. 이전 대화 기록을 '이전 대화 기록 보기' 섹션에서 확인할 수 있습니다.
 
-### 3. 중앙 정렬된 모달 구현
+## 시스템 요구사항
+- Python 3.9.10
+- 인터넷 연결 (OpenAI API 사용)
+- OpenAI API 키
 
-**요구사항**:
-각 유형 선택 시 화면 중앙에 정보를 보여주는 모달 팝업이 필요했습니다.
+## 개발 정보
+- 프레임워크: Streamlit
+- AI 모델: OpenAI GPT-4 / GPT-3.5-turbo
+- 대화 히스토리 저장: 로컬 JSON 파일
 
-**해결 방법**:
-`@st.dialog` 데코레이터와 CSS 스타일링을 사용하여 중앙 정렬된 모달 창을 구현했습니다.
+## 향후 개발 계획
+- 더 다양한 직장 상황과 시나리오 추가
+- 사용자 맞춤형 캐릭터 설정 기능
+- 대화 분석 및 피드백 기능 고도화
+- 비즈니스 롤플레이 확장 기능
 
-## 프로젝트 구조
-
-- `app.py`: 메인 애플리케이션 파일
-
-## 주요 코드 설명
-
-### 세션 상태 관리
-```python
-if 'page' not in st.session_state:
-    st.session_state.page = 'index'
-if 'selected_bot' not in st.session_state:
-    st.session_state.selected_bot = None
-if 'messages' not in st.session_state:
-    st.session_state.messages = []
-if 'show_dialog' not in st.session_state:
-    st.session_state.show_dialog = False
-```
-
-
-### 모달 다이얼로그 구현
-```python
-@st.dialog("챗봇 유형 선택", width="medium")
-def show_confirm_dialog():
-    bot_type = st.session_state.dialog_type
-    info = bot_info[bot_type]
-    
-    # 중앙 정렬을 위한 CSS
-    st.markdown("""
-    <style>
-    div.stMarkdown {
-        text-align: center;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    # 유형 타이틀 및 내용
-    st.markdown(f"<h1 style='text-align: center;'>{info['name']}</h1>", unsafe_allow_html=True)
-    
-    # 이미지, 설명, 버튼 등 구현
-```
-
-
-### 화면 전환 로직
-```python
-# 현재 페이지에 따라 해당 함수 호출
-if st.session_state.show_dialog:
-    show_confirm_dialog()
-
-if st.session_state.page == 'index':
-    show_index_page()
-elif st.session_state.page == 'chat':
-    show_chat_page()
-```
-
-
-## 챗봇 유형 정보
-
-| 유형 번호 | MBTI | 설명 |
-|---------|------|-----|
-| 유형 1 | ESTJ | 냉철한 성격을 가지고 있습니다. |
-| 유형 2 | INFP | 감성적이고 창의적인 성격을 가지고 있습니다. |
-| 유형 3 | ENFJ | 사교적이고 리더십이 있는 성격을 가지고 있습니다. |
-| 유형 4 | INTP | 논리적이고 분석적인 성격을 가지고 있습니다. |
-| 유형 5 | ISFJ | 신중하고 배려심이 깊은 성격을 가지고 있습니다. |
-
-## 향후 개선 사항
-
-- 실제 챗봇 API 연동
-- 사용자 정의 프롬프트 지원
-- 대화 기록 저장 및 불러오기 기능
-- 반응형 디자인 개선
-- 다크/라이트 테마 지원
-
-## 참고 자료
-
-- [Streamlit 공식 문서](https://docs.streamlit.io/)
-- [Streamlit Dialog API 문서](https://docs.streamlit.io/develop/api-reference/execution-flow/st.dialog)
-- [Streamlit Session State 가이드](https://docs.streamlit.io/library/api-reference/session-state)
-
-## 라이선스
-
-이 프로젝트는 MIT 라이선스 하에 배포됩니다.
-
-## 기여 방법
-
-1. 이슈를 생성하거나 기존 이슈에 참여하세요.
-2. 변경사항을 포함한 Pull Request를 보내주세요.
-3. 코드 리뷰 후 변경사항이 적용됩니다.
+## 라이센스
+[라이센스 정보]
+직장 커뮤니케이션 스킬을 향상시키고 다양한 성격 유형을 이해하는 데 도움이 되는 이 애플리케이션을 통해 더 나은 협업 관계를 구축해보세요!
