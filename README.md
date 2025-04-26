@@ -51,7 +51,7 @@ streamlit run app.py
 
 ## 시스템 요구사항
 - Python 3.9.10
-- 인터넷 연결 (OpenAI API 사용)
+- Streamlit 1.44.0
 - OpenAI API 키
 
 ## 개발 정보
